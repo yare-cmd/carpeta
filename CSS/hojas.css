@@ -1,0 +1,348 @@
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+:root {
+  --primario: #506ba7;
+  --secundario: #1e40af;
+  --fondo: #bfc4cfab;
+  --blanco: #93d16f;
+  --gris: #e5e7eb;
+  --texto: #1f2937;
+  --borde: #d1d5db;
+  --exito: #10b981;
+  --peligro: #db500f;
+}
+body { background-color: var(--fondo); color: var(--texto); min-height: 100vh; }
+.oculto { display: none !important; }
+.pantalla-activa { display: flex; }
+
+/* Login y Registro */
+.pantalla-activa {
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--primario), var(--secundario));
+}
+.contenedor-login {
+  background: var(--blanco);
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  width: 100%;
+  max-width: 420px;
+}
+.contenedor-login h2 { text-align: center; margin-bottom: 1.5rem; color: var(--primario); }
+.contenedor-login label { display: block; margin: 0.8rem 0 0.3rem; font-weight: 500; }
+.contenedor-login input {
+  width: 100%; padding: 0.75rem; border: 1px solid var(--borde); border-radius: 6px;
+  margin-bottom: 0.5rem;
+}
+.btn-principal, .btn-secundario, .btn-salir {
+  padding: 0.75rem 1rem; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;
+  transition: background 0.2s;
+}
+.btn-principal { background: var(--primario); color: white; width: 100%; margin-top: 0.5rem; }
+.btn-principal:hover { background: var(--secundario); }
+.btn-secundario { background: #4b5563; color: white; width: 100%; margin-top: 0.5rem; }
+.btn-salir { background: var(--peligro); color: white; }
+#mensaje-login, #mensaje-registro { margin-top: 1rem; text-align: center; font-size: 0.9rem; }
+a { color: var(--primario); text-decoration: none; }
+
+/* Estructura Principal */
+.barra-superior {
+  background: var(--blanco); padding: 1rem 2rem; display: flex; align-items: center;
+  justify-content: space-between; box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+}
+.buscador input {
+  padding: 0.6rem 1rem; width: 320px; border: 1px solid var(--borde); border-radius: 6px;
+}
+.contenedor-flex { display: flex; min-height: calc(100vh - 72px); }
+
+/* Barra Lateral */
+.barra-lateral {
+  width: 300px; background: var(--blanco); border-right: 1px solid var(--gris); padding: 1.5rem;
+  overflow-y: auto;
+}
+.barra-lateral h3 { margin: 1.5rem 0 0.8rem; font-size: 1rem; color: #4b5563; }
+.barra-lateral > nav > h3 { margin-top: 0; }
+.barra-lateral ul { list-style: none; }
+.barra-lateral li {
+  padding: 0.75rem 1rem; border-radius: 6px; margin-bottom: 0.4rem; cursor: pointer;
+}
+.barra-lateral li:hover, .categoria-activa { background: var(--primario); color: white; }
+.subir-archivo, .solicitar-curso { margin-top: 1.5rem; }
+.subir-archivo input, .subir-archivo select, .subir-archivo textarea,
+.modal-contenido input, .modal-contenido select, .modal-contenido textarea {
+  width: 100%; padding: 0.6rem; margin: 0.4rem 0; border: 1px solid var(--borde); border-radius: 6px;
+}
+.subir-archivo textarea, .modal-contenido textarea { resize: vertical; min-height: 80px; }
+
+/* Contenido */
+.contenido-principal { flex: 1; padding: 2rem; background: var(--fondo); }
+.contenido-principal h2 { margin-bottom: 1.5rem; color: var(--texto); }
+.lista-docs { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+.tarjeta-doc {
+  background: white; padding: 1.2rem; border-radius: 10px; border-left: 4px solid var(--primario);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06); transition: transform 0.2s;
+}
+.tarjeta-doc:hover { transform: translateY(-3px); }
+.tarjeta-doc h4 { margin-bottom: 0.4rem; }
+.tarjeta-doc .etiqueta {
+  display: inline-block; background: var(--gris); padding: 0.2rem 0.6rem; border-radius: 20px;
+  font-size: 0.75rem; margin: 0.4rem 0.6rem 0.4rem 0;
+}
+.botones-doc { margin-top: 0.8rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.btn-editar { background: #f59e0b; color: white; }
+.btn-eliminar { background: var(--peligro); color: white; }
+.btn-ver { background: var(--exito); color: white; }
+.botones-doc button {
+  padding: 0.4rem 0.8rem; border: none; border-radius: 5px; cursor: pointer; font-size: 0.85rem;
+}
+
+/* Modales */
+.modal {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex;
+  justify-content: center; align-items: center; z-index: 1000;
+}
+.modal-contenido {
+  background: white; padding: 2rem; border-radius: 10px; width: 90%; max-width: 480px;
+  position: relative;
+}
+.cerrar, .cerrar-curso {
+  position: absolute; top: 1rem; right: 1.2rem; font-size: 1.5rem; cursor: pointer; color: #6b7280;
+}
+.cerrar:hover, .cerrar-curso:hover { color: black; }
+
+
+
+
+
+
+* { 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
+  font-family: 'Segoe UI', sans-serif; 
+  font-weight: bold; /* Todo el texto en negrita */
+}
+:root {
+  --primario: #506ba7;
+  --secundario: #43b634;
+  --fondo: #bfc4cfab;
+  --blanco: #93d16f;
+  --gris: #e5e7eb;
+  --texto: #1f2937;
+  --borde: #54a399;
+  --exito: #10b981;
+  --peligro: #db500f;
+}
+body { 
+  background-color: var(--fondo); 
+  color: var(--texto); 
+  min-height: 100vh; 
+}
+.oculto { display: none !important; }
+.pantalla-activa { display: flex; }
+
+/* Login y Registro */
+.pantalla-activa {
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--primario), var(--secundario));
+}
+.contenedor-login {
+  background: var(--blanco);
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  width: 100%;
+  max-width: 420px;
+}
+.contenedor-login h2 { 
+  text-align: center; 
+  margin-bottom: 1.5rem; 
+  color: var(--primario); 
+  font-weight: bold;
+}
+.contenedor-login label { 
+  display: block; 
+  margin: 0.8rem 0 0.3rem; 
+  font-weight: bold; 
+}
+.contenedor-login input {
+  width: 100%; 
+  padding: 0.75rem; 
+  border: 1px solid var(--borde); 
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+.btn-principal, .btn-secundario, .btn-salir {
+  padding: 0.75rem 1rem; 
+  border: none; 
+  border-radius: 6px; 
+  cursor: pointer; 
+  font-weight: bold;
+  transition: background 0.2s;
+}
+.btn-principal { 
+  background: var(--primario); 
+  color: white; 
+  width: 100%; 
+  margin-top: 0.5rem; 
+}
+.btn-principal:hover { background: var(--secundario); }
+.btn-secundario { 
+  background: #4b5563; 
+  color: white; 
+  width: 100%; 
+  margin-top: 0.5rem; 
+}
+.btn-salir { background: var(--peligro); color: white; }
+#mensaje-login, #mensaje-registro { 
+  margin-top: 1rem; 
+  text-align: center; 
+  font-size: 0.9rem; 
+  font-weight: bold;
+}
+a { 
+  color: var(--primario); 
+  text-decoration: none; 
+  font-weight: bold;
+}
+
+/* Estructura Principal */
+.barra-superior {
+  background: var(--blanco); 
+  padding: 1rem 2rem; 
+  display: flex; 
+  align-items: center;
+  justify-content: space-between; 
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  font-weight: bold;
+}
+.buscador input {
+  padding: 0.6rem 1rem; 
+  width: 320px; 
+  border: 1px solid var(--borde); 
+  border-radius: 6px;
+  font-weight: bold;
+}
+.contenedor-flex { display: flex; min-height: calc(100vh - 72px); }
+
+/* Barra Lateral */
+.barra-lateral {
+  width: 300px; 
+  background: var(--blanco); 
+  border-right: 1px solid var(--gris); 
+  padding: 1.5rem;
+  overflow-y: auto;
+  font-weight: bold;
+}
+.barra-lateral h3 { 
+  margin: 1.5rem 0 0.8rem; 
+  font-size: 1rem; 
+  color: #4b5563; 
+  font-weight: bold;
+}
+.barra-lateral > nav > h3 { margin-top: 0; }
+.barra-lateral ul { list-style: none; }
+.barra-lateral li {
+  padding: 0.75rem 1rem; 
+  border-radius: 6px; 
+  margin-bottom: 0.4rem; 
+  cursor: pointer;
+  font-weight: bold;
+}
+.barra-lateral li:hover, .categoria-activa { 
+  background: var(--primario); 
+  color: white; 
+}
+.subir-archivo, .solicitar-curso { margin-top: 1.5rem; }
+.subir-archivo input, .subir-archivo select, .subir-archivo textarea,
+.modal-contenido input, .modal-contenido select, .modal-contenido textarea {
+  width: 100%; 
+  padding: 0.6rem; 
+  margin: 0.4rem 0; 
+  border: 1px solid var(--borde); 
+  border-radius: 6px;
+  font-weight: bold;
+}
+.subir-archivo textarea, .modal-contenido textarea { 
+  resize: vertical; 
+  min-height: 80px; 
+}
+
+/* Contenido */
+.contenido-principal { flex: 1; padding: 2rem; background: var(--fondo); }
+.contenido-principal h2 { 
+  margin-bottom: 1.5rem; 
+  color: var(--texto); 
+  font-weight: bold;
+}
+.lista-docs { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+.tarjeta-doc {
+  background: white; 
+  padding: 1.2rem; 
+  border-radius: 10px; 
+  border-left: 4px solid var(--primario);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06); 
+  transition: transform 0.2s;
+  font-weight: bold;
+}
+.tarjeta-doc:hover { transform: translateY(-3px); }
+.tarjeta-doc h4 { 
+  margin-bottom: 0.4rem; 
+  font-weight: bold;
+}
+.tarjeta-doc .etiqueta {
+  display: inline-block; 
+  background: var(--gris); 
+  padding: 0.2rem 0.6rem; 
+  border-radius: 20px;
+  font-size: 0.75rem; 
+  margin: 0.4rem 0.6rem 0.4rem 0;
+  font-weight: bold;
+}
+.botones-doc { margin-top: 0.8rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.btn-editar { background: #f59e0b; color: white; }
+.btn-eliminar { background: var(--peligro); color: white; }
+.btn-ver { background: var(--exito); color: white; }
+.botones-doc button {
+  padding: 0.4rem 0.8rem; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+/* Modales */
+.modal {
+  position: fixed; 
+  inset: 0; 
+  background: rgba(0,0,0,0.5); 
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  z-index: 1000;
+  font-weight: bold;
+}
+.modal-contenido {
+  background: white; 
+  padding: 2rem; 
+  border-radius: 10px; 
+  width: 90%; 
+  max-width: 480px;
+  position: relative;
+  font-weight: bold;
+}
+.cerrar, .cerrar-curso {
+  position: absolute; 
+  top: 1rem; 
+  right: 1.2rem; 
+  font-size: 1.5rem; 
+  cursor: pointer; 
+  color: #6b7280;
+  font-weight: bold;
+}
+.cerrar:hover, .cerrar-curso:hover { color: black; }

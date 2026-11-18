@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archivos Digitales</title>
+  <link rel="stylesheet" href="CSS/EjercicioFinal.css">
+  <!-- CDN Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+  <!-- Pantalla de Inicio de Sesión -->
+  <div id="pantalla-login" class="pantalla-activa">
+    <div class="contenedor-login">
+      <h2>🔐 Acce aso Archivos Digitales</h2>
+      <form id="form-login">
+        <label>📧 Correo electrónico</label>
+        <input type="email" id="correo" required>
+        
+        <label>🔐 Contraseña</label>
+        <input type="password" id="contrasena" required>
+        
+        <button type="submit" class="btn-principal">✔️ Ingresar</button>
+        <p id="mensaje-login"></p>
+        <p>¿No tienes cuenta? <a href="#" id="link-registro">Regístrate aquí</a></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Pantalla de Registro -->
+  <div id="pantalla-registro">
+    <div class="contenedor-login">
+      <h2>📧 Crear Cuenta</h2>
+      <form id="form-registro">
+        <label>🖨️ Correo electrónico</label>
+        <input type="email" id="reg-correo" required>
+        
+        <label>🔐 Contraseña (mín. 6 caracteres)</label>
+        <input type="password" id="reg-contrasena" required>
+        
+        <button type="submit" class="btn-principal">🛃 Registrarse</button>
+        <p id="mensaje-registro"></p>
+        <p>¿Ya tienes cuenta? <a href="#" id="link-login">🛅 Inicia sesión</a></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Pantalla Principal (Solo con sesión) -->
+  <div id="pantalla-principal" class="oculto">
+    <!-- Barra Superior -->
+    <header class="barra-superior">
+      <h1>💻 Archivos Digitales</h1>
+      <div class="buscador">
+        <input type="text" id="buscar-archivos" placeholder="Buscar documentos...">
+      </div>
+      <button id="btn-cerrar-sesion" class="btn-salir">❌ Cerrar Sesión</button>
+    </header>
+
+    <div class="contenedor-flex">
+      <!-- Barra Lateral -->
+      <aside class="barra-lateral">
+        <nav>
+          <h3>📠 Categorías</h3>
+          <ul>
+            <li data-categoria="todos" class="categoria-activa">📋 Todos los documentos</li>
+            <li data-categoria="privados">🔐 Documentos Privados</li>
+            <li data-categoria="academicos">🎓 Documentos Académicos</li>
+            <li data-categoria="cursos">⏳ Cursos de Actualización</li>
+            <li data-categoria="familiares">👶👩👨👵👴  Documentos Familiares</li>
+          </ul>
+        </nav>
+
+        <div class="subir-archivo">
+          <h3>📩 Agregar Documento</h3>
+          <form id="form-subir">
+            <input type="file" id="archivo-input" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
+            <input type="text" id="nombre-doc" placeholder="Nombre del documento" required>
+            <select id="categoria-doc" required>
+              <option value="">📦 Selecciona categoría</option>
+              <option value="privados">🕵️‍♂️ Privados</option>
+              <option value="academicos">👩‍🎓 Académicos</option>
+              <option value="cursos">🗃️ Cursos</option>
+              <option value="familiares">👨‍👨‍👧‍👦 Familiares</option>
+            </select>
+            <select id="tipo-doc" required>
+              <option value="">🗳️ Tipo de documento </option>
+              <option value="INE">📰 INE</option>
+              <option value="Acta de Nacimiento">📄 Acta de Nacimiento</option>
+              <option value="CURP">🎫 CURP</option>
+              <option value="CV">📝 CV</option>
+              <option value="Recibo de Luz">📄 Recibo de Luz</option>
+              <option value="Recibo de Pago">🎫 Recibo de Pago</option>
+              <option value="Diploma">📔 Diploma</option>
+              <option value="Título">📜 Título</option>
+              <option value="Cédula Profesional">📜Cédula Profesional</option>
+              <option value="Otro">📚 Otros</option>
+            </select>
+            <textarea id="descripcion-doc" placeholder="Descripción (opcional)"></textarea>
+            <button type="submit" class="btn-principal">💼 Guardar Documento</button>
+          </form>
+        </div>
+
+        <div class="solicitar-curso">
+          <h3>Solicitar Curso</h3>
+          <button id="btn-form-curso" class="btn-secundario">📝 Formulario de Solicitud</button>
+        </div>
+      </aside>
+
+      <!-- Contenido Principal -->
+      <main class="contenido-principal">
+        <h2 id="titulo-categoria">📔 Todos los Documentos</h2>
+        <div id="lista-documentos" class="lista-docs">
+          <!-- Se llena con JS -->
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Modal Editar -->
+  <div id="modal-editar" class="modal oculto">
+    <div class="modal-contenido">
+      <span class="cerrar">&times;</span>
+      <h3>📝 Editar Documento</h3>
+      <form id="form-editar">
+        <input type="hidden" id="editar-id">
+        <input type="text" id="editar-nombre" required>
+        <select id="editar-categoria" required>
+          <option value="privados">✉︎ Privados</option>
+          <option value="academicos">⌨️ Académicos</option>
+          <option value="cursos">🔁 Cursos</option>
+          <option value="familiares">👪Familiares</option>
+        </select>
+        <select id="editar-tipo" required>
+          <option value="INE">INE</option>
+          <option value="Acta de Nacimiento">Acta de Nacimiento</option>
+          <option value="CURP">CURP</option>
+          <option value="CV">CV</option>
+          <option value="Recibo de Luz">Recibo de Luz</option>
+          <option value="Recibo de Pago">Recibo de Pago</option>
+          <option value="Diploma">Diploma</option>
+          <option value="Título">Título</option>
+          <option value="Cédula Profesional">Cédula Profesional</option>
+          <option value="Otro">Otro</option>
+        </select>
+        <textarea id="editar-descripcion"></textarea>
+        <button type="submit" class="btn-principal">✔️ Guardar Cambios</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Solicitud Curso -->
+  <div id="modal-curso" class="modal oculto">
+    <div class="modal-contenido">
+      <span class="cerrar-curso">&times;</span>
+      <h3>⏲︎ Solicitar Información de Cursos</h3>
+      <form id="form-curso">
+        <input type="text" id="curso-nombre" placeholder="Tu nombre completo" required>
+        <input type="email" id="curso-correo" placeholder="Tu correo electrónico" required>
+        <input type="tel" id="curso-telefono" placeholder="Tu teléfono">
+        <textarea id="curso-mensaje" placeholder="Escribe tu solicitud..." required></textarea>
+        <button type="submit" class="btn-principal">▶︎ Enviar Solicitud</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="JS/EjercicioFinal.js"></script>
+</body>
+</html>
